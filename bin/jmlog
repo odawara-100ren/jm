@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 #----------------------------------
-# jm
+# jmlog
 #----------------------------------
 
 # 直接 $ ruby bin/jm.rb で実行したときに必要
@@ -9,9 +9,13 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 require "jira_manpower"
 
-unless ARGV.length == 3
-  puts "number of parameter should be 3"
+unless ARGV.length == 1
+  puts "number of parameter should be 1"
   exit
 end
 
-JiraManpower::Register.new.register(ARGV[0], ARGV[1], ARGV[2])
+if /\d+-\d+-\d+/.match(ARGV[0])
+  JiraManpower::Logger.new.show_datelog(ARGV[0])
+else
+  JiraManpower::Logger.new.show_log(ARGV[0])
+end
